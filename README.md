@@ -3,10 +3,10 @@
 | | |
 |---|---|
 | **Module** | PROG211 – Object-Oriented Programming 1 |
-| **Assignment** | Real-World Solutions under DPG Standards (Individual, 10%) |
+| **Assignment** | Real-World Solutions under DPG Standards |
 | **Domain** | Health – Patient Record System |
 | **Institution** | Limkokwing University of Creative Technology, Sierra Leone |
-| **Student** |  Zeyad Mohamed Elgabry / 905005887
+| **Student** |Zeyad Mohamed Elgabry / 905005887
 | **Examiner** | Amandus Benjamin Coker |
 
 A simple Python program that manages patient records using Object-Oriented Programming. It lets a clinic register patients, assign them to a department, record follow-up visits and discharge them, while keeping the stored personal data to a minimum.
@@ -26,8 +26,8 @@ Many small clinics still keep patient information in paper registers. Paper reco
 - Update a patient's record
 - Display all patients in a readable format
 - Input validation (letters-only text fields, age range, valid department)
-- Starts with an empty record list and goes straight to the menu, so no patient data is shown until it is entered
-- Optional built-in demo (menu option 5) that creates sample patients and shows objects interacting
+- Starts directly with the menu: no records are printed at start-up
+- Three fictional sample patients are pre-loaded in memory (created silently) so the program can be tried immediately; they are shown only when the user chooses option 4
 
 ## 3. How the Code Meets the Assignment Tasks
 
@@ -95,7 +95,7 @@ The assignment requires that **no sensitive personal data is stored**. This proj
 
 **Additional privacy measures**
 
-- **Nothing is displayed at start-up.** The program opens with an empty record list and shows records only after the user adds them (or chooses the optional demo).
+- **Nothing is displayed at start-up.** Records are shown only when the user chooses "Display all patients".
 - **Records stay in memory only.** Nothing is written to disk or sent over a network, so no patient data remains after the program closes.
 - **The name is not used for lookups.** Every operation (visit, discharge) uses the anonymous ID (`PT-001`), so the name does not need to be typed or exposed.
 - **Input validation** (`validate_text()` and `validate_age()`) rejects invalid or unexpected data before it is stored.
@@ -115,33 +115,41 @@ cd <your-repository>
 python patient_record_system.py
 ```
 
-The program starts directly with the interactive menu and an **empty** record list. Nothing is displayed until you add patients. Menu option 5 runs an optional demo with fictional sample data.
+The program starts directly with the menu and prints nothing before it. Three **fictional** sample patients (`PT-001` to `PT-003`) are created silently when the program starts and are stored in the dictionary. They only appear when you choose **option 4 – Display all patients**. The first patient you add yourself receives the ID `PT-004`.
 
 ## 8. Example Usage (sample input / output)
 
-### Part A – Demo (menu option 5)
+### Part A – Start-up and displaying the stored records
+
+The program opens with the menu only. Choosing option 4 displays the pre-loaded records:
 
 ```text
-===== DEMO: creating objects =====
-Patient PT-001 added.
-Patient PT-002 added.
-Patient PT-003 added.
-
-===== DEMO: interaction between objects =====
-  [+] Visit recorded for PT-001 (total visits: 2).
-  [+] Visit recorded for PT-002 (total visits: 2).
-  [-] PT-003 has been discharged.
-  [!] PT-003 is discharged. Re-admit first.
-  [~] Record PT-001 updated.
+===== PATIENT RECORD SYSTEM =====
+1. Add new patient
+2. Add a visit
+3. Discharge patient
+4. Display all patients
+5. Exit
+Choose an option (1-5): 4
 
 ===== ALL PATIENT RECORDS (3) =====
 Patient ID : PT-001
   Name       : John Doe
   Age        : 34
   District   : Port Loko
-  Condition  : Malaria (recovering)
+  Condition  : Malaria recovering
   Department : General Medicine
   Location   : Ward A
+  Visits     : 2
+  Status     : ADMITTED
+----------------------------------------
+Patient ID : PT-002
+  Name       : Jane Smith
+  Age        : 5
+  District   : Bo
+  Condition  : Typhoid
+  Department : Pediatrics
+  Location   : Ward B
   Visits     : 2
   Status     : ADMITTED
 ----------------------------------------
@@ -155,49 +163,37 @@ Patient ID : PT-003
   Visits     : 1
   Status     : DISCHARGED
 ----------------------------------------
-Total patients (class method)       : 3
-Departments (static method)         : ['General Medicine', 'Pediatrics', 'Maternity', 'Surgery', 'Emergency']
 ```
 
-_(Patient PT-002 is also displayed in the full output.)_
+These sample records show objects interacting: each `Patient` holds a `Department` object, `PT-001` and `PT-002` have recorded visits, `PT-001` was updated, and `PT-003` was discharged.
 
-### Part B – Interactive menu (starts empty)
+### Part B – Adding a patient, recording a visit and discharging
 
 ```text
-===== PATIENT RECORD SYSTEM =====
-1. Add new patient
-2. Add a visit
-3. Discharge patient
-4. Display all patients
-5. Run demo (sample data)
-6. Exit
-Choose an option (1-6): 4
-No records to display.
-
-Choose an option (1-6): 1
+Choose an option (1-5): 1
 Name: Ahmed Bangura
 Age: 40
 District: Bombali
 Condition: Fever
 Departments: General Medicine, Pediatrics, Maternity, Surgery, Emergency
 Department: Surgery
-Patient PT-001 added.
+Patient PT-004 added.
 
-Choose an option (1-6): 2
-Patient ID (e.g. PT-001): PT-001
-  [+] Visit recorded for PT-001 (total visits: 2).
+Choose an option (1-5): 2
+Patient ID (e.g. PT-001): PT-004
+  [+] Visit recorded for PT-004 (total visits: 2).
 
-Choose an option (1-6): 3
-Patient ID (e.g. PT-001): PT-001
-  [-] PT-001 has been discharged.
+Choose an option (1-5): 3
+Patient ID (e.g. PT-001): PT-004
+  [-] PT-004 has been discharged.
 ```
 
 ### Part C – Input validation
 
 ```text
-Choose an option (1-6): 1
+Choose an option (1-5): 1
 Name: Ahmed1
-  [!] Name must contain letters only. try again.
+[!] Name must contain letters only.
 ```
 
 ## 9. Project Structure

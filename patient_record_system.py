@@ -1,3 +1,6 @@
+import contextlib
+import io
+
 from department import Department
 from patient import Patient
 
@@ -20,24 +23,20 @@ def display_patients(records):
         patient.display_info()
         print("-" * 40)
 
-def demo(records):
-    """Automatic demonstration of object creation and interaction."""
+def seed_demo_patients(records):
     p1 = Patient("John Doe", 34, "Western Area", "Malaria", Department.from_list("General Medicine"))
     p2 = Patient("Jane Smith", 5, "Bo", "Typhoid", Department.from_list("Pediatrics"))
     p3 = Patient("Bob Johnson", 27, "Kenema", "Prenatal care", Department.from_list("Maternity"))
 
     for p in (p1, p2, p3):
-        add_patient(records, p)
+        records[p.patient_id] = p          # بيضيفهم من غير print
 
-    p1.add_visit()
-    p2.add_visit()
-    p3.discharge()
-    p3.add_visit()          # discharged -> warning
-    p1.update_record(condition="Malaria (recovering)", district="Port Loko")
+    with contextlib.redirect_stdout(io.StringIO()):
+        p1.add_visit()
+        p2.add_visit()
+        p3.discharge()
+        p1.update_record(condition="Malaria recovering", district="Port Loko")
 
-    display_patients(records)
-    print(f"Total patients (class method)       : {Patient.get_total_patients()}")
-    print(f"Departments (static method)         : {Department.available_departments()}")
 
 
 def menu(records):
@@ -89,7 +88,7 @@ def menu(records):
 
 def main():
     records = {}        # the single data structure of the program
-    # demo(records)
+    seed_demo_patients(records) 
     menu(records)
 
 
