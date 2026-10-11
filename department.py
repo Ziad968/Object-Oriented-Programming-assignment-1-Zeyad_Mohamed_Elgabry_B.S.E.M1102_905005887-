@@ -20,7 +20,7 @@ class Department:
         print(f"  Department : {self.name}")
         print(f"  Location   : {self.ward}")
 
-    # Class method (Task 3): alternative constructor that reads the tuple
+    # Class method alternative constructor that reads the tuple
     @classmethod
     def from_list(cls, name):
         """Create a Department object from the DEPARTMENTS tuple."""
@@ -29,7 +29,7 @@ class Department:
                 return cls(dept_name, ward)
         raise ValueError(f"'{name}' is not a valid department.")
 
-    # Static method (Task 3): utility that needs no object or class data
+    # Static method utility that needs no object or class data
     @staticmethod
     def available_departments():
         """Return the names of all departments."""

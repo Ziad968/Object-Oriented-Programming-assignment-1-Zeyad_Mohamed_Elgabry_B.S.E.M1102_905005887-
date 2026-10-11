@@ -66,13 +66,13 @@ class Patient:
         print(f"  Visits     : {self.visits}")
         print(f"  Status     : {self.status}")
 
-    # ---- Class method (Task 3) -------------------------------------------
+    # ---- Class method -------------------------------------------
     @classmethod
     def get_total_patients(cls):
         """Return how many patient records have been created so far."""
         return cls.total_patients
 
-    # ---- Static method (Task 3) ------------------------------------------
+    # ---- Static method ------------------------------------------
     @staticmethod
     def validate_text(text):
         cleaned = text.replace(" ", "").replace("-", "")

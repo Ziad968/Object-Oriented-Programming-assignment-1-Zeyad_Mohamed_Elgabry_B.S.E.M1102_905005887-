@@ -6,7 +6,7 @@ from patient import Patient
 
 
 
-# TASK 2: the ONE data structure (a dictionary) + add / display functions
+#the ONE data structure (a dictionary) + add / display functions
 def add_patient(records, patient):
     """Add a Patient to the dictionary using the patient ID as the key."""
     records[patient.patient_id] = patient
