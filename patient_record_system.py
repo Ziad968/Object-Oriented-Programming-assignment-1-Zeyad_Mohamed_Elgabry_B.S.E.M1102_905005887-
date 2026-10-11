@@ -29,7 +29,7 @@ def seed_demo_patients(records):
     p3 = Patient("Bob Johnson", 27, "Kenema", "Prenatal care", Department.from_list("Maternity"))
 
     for p in (p1, p2, p3):
-        records[p.patient_id] = p          # بيضيفهم من غير print
+        records[p.patient_id] = p         
 
     with contextlib.redirect_stdout(io.StringIO()):
         p1.add_visit()
